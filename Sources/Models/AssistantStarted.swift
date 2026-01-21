@@ -13,9 +13,22 @@ public struct AssistantStarted: Codable {
         public let voicemailMessage: String?
         public let endCallMessage: String?
 
-        // Nested structures can be added as needed
-        // For now, using generic dictionaries for complex nested objects
-        // to avoid parsing errors from optional/variable fields
+        // Custom decoder to ignore extra fields like voice, model, transcriber, etc.
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            id = try container.decodeIfPresent(String.self, forKey: .id)
+            orgId = try container.decodeIfPresent(String.self, forKey: .orgId)
+            name = try container.decodeIfPresent(String.self, forKey: .name)
+            createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
+            updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
+            firstMessage = try container.decodeIfPresent(String.self, forKey: .firstMessage)
+            voicemailMessage = try container.decodeIfPresent(String.self, forKey: .voicemailMessage)
+            endCallMessage = try container.decodeIfPresent(String.self, forKey: .endCallMessage)
+        }
+
+        private enum CodingKeys: String, CodingKey {
+            case id, orgId, name, createdAt, updatedAt, firstMessage, voicemailMessage, endCallMessage
+        }
     }
 
     // Custom decoder to be lenient with additional fields
