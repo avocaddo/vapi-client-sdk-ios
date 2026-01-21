@@ -26,8 +26,22 @@ public struct AssistantStarted: Codable {
             endCallMessage = try container.decodeIfPresent(String.self, forKey: .endCallMessage)
         }
 
+        // Custom encoder
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encodeIfPresent(id, forKey: .id)
+            try container.encodeIfPresent(orgId, forKey: .orgId)
+            try container.encodeIfPresent(name, forKey: .name)
+            try container.encodeIfPresent(createdAt, forKey: .createdAt)
+            try container.encodeIfPresent(updatedAt, forKey: .updatedAt)
+            try container.encodeIfPresent(firstMessage, forKey: .firstMessage)
+            try container.encodeIfPresent(voicemailMessage, forKey: .voicemailMessage)
+            try container.encodeIfPresent(endCallMessage, forKey: .endCallMessage)
+        }
+
         private enum CodingKeys: String, CodingKey {
-            case id, orgId, name, createdAt, updatedAt, firstMessage, voicemailMessage, endCallMessage
+            case id, orgId, name, createdAt, updatedAt, firstMessage, voicemailMessage,
+                endCallMessage
         }
     }
 
@@ -35,6 +49,12 @@ public struct AssistantStarted: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         newAssistant = try container.decodeIfPresent(Assistant.self, forKey: .newAssistant)
+    }
+
+    // Custom encoder
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(newAssistant, forKey: .newAssistant)
     }
 
     private enum CodingKeys: String, CodingKey {
