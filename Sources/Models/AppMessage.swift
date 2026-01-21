@@ -1,6 +1,6 @@
 //
 //  AppMessage.swift
-//  
+//
 //
 //  Created by Brent Whitman on 2024-01-15.
 //
@@ -19,7 +19,8 @@ struct AppMessage: Codable {
         case statusUpdate = "status-update"
         case voiceInput = "voice-input"
         case userInterrupted = "user-interrupted"
+        case assistantStarted = "assistant.started"
     }
-    
+
     let type: MessageType
 }
